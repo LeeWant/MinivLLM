@@ -214,11 +214,12 @@ class RowParallelLinear(LinearBase):
         param_data.copy_(slided_weight)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        result = nn.functional.linear(x, self.weight, self.bias)
+        result = nn.functional.linear(x, self.weight, None)
         if self.tp_size > 1:
-            return dist.all_reduce(result)
-        else:
-            return result
+            dist.all_reduce(result)  # in-place sum
+        if self.bias is not None:
+            result = result + self.bias
+        return result
 
 
 if __name__ == "__main__":
