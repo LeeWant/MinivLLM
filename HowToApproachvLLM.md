@@ -139,6 +139,52 @@ for name, param in model.named_parameters():
 - One ColumnParallel → One RowParallel → `dist.all_reduce`
 - Output sharding of first layer = Input sharding of second layer
 
+**Tensor Parallel Testing**
+
+Test environment single machine multi card (n=4).
+
+```python
+if __name__ == "__main__":
+    rank, world_size, local_rank, device = _init_dist()
+    if rank == 0:
+        print(f"Running TP tests with world_size={world_size} on device={device}")
+
+    # The test output 'allclose=True' is passed
+    test_column_parallel(device)
+    test_merged_column_parallel(device)
+    test_qkv_column_parallel(device)
+    test_row_parallel(device)
+    
+    dist.barrier()
+    dist.destroy_process_group()
+```
+
+Start the parallel environment through the terminal command line for testing. 
+Use `--nproc_per_node` to set the number of GPUs.
+
+```
+cd src/myvllm/layers
+torchrun --standalone --nproc_per_node=4 linear.py
+```
+
+**Output:** The error comes from rounding differences caused by floating-point operations.
+
+```
+# single node with 2 GPUs
+Running TP tests with world_size=2 on device=cuda:0
+[ColumnParallel] allclose=True, max_abs_err=0.000000
+[MergedColumnParallel] allclose=True, max_abs_err=0.000127
+[QKVColumnParallel] allclose=True, max_abs_err=0.000000
+[RowParallel] allclose=True, max_abs_err=0.000011
+
+# single node with 4 GPUs
+Running TP tests with world_size=4 on device=cuda:0
+[ColumnParallel] allclose=True, max_abs_err=0.000137
+[MergedColumnParallel] allclose=True, max_abs_err=0.000107
+[QKVColumnParallel] allclose=True, max_abs_err=0.000053
+[RowParallel] allclose=True, max_abs_err=0.000011
+```
+
 ---
 
 ### 1.4 Vocab Embedding & LM Head ✅
