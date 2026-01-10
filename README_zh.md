@@ -1,6 +1,6 @@
-<div style="text-align: center;">
-  <img src="./assets/minivllm.png" alt="minivllm" style="width:50%">
-</div>
+<center>
+  <img src="./assets/minivllm.png" alt="minivllm" style="width:50%; height:50%;">
+</center>
 
 <p align="center">
 | <a href="./README.md"><b>English</b></a> 
