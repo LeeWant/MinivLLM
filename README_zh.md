@@ -1,4 +1,7 @@
-![本地图片](./assets/minivllm.png)
+<div style="text-align: center;">
+  <img src="./assets/minivllm.png" alt="minivllm" style="width:50%">
+</div>
+
 <p align="center">
 | <a href="./README.md"><b>English</b></a> 
 | <a href="./README_zh.md"><b>中文</b></a> |
