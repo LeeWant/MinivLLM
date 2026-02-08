@@ -8,6 +8,8 @@ This document provides a step-by-step guide to understanding and replicating vLL
 
 This package is developed using one A6000 GPU.
 
+[Video link](https://www.bilibili.com/video/BV1Vjz1B2EQu)
+
 ---
 
 ## Step 1: Layers

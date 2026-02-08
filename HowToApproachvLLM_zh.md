@@ -8,6 +8,8 @@
 
 **原始开发环境及测试基于A6000 GPU。**
 
+[配套视频链接](https://www.bilibili.com/video/BV1Vjz1B2EQu)
+
 ---
 
 ## Step 1: Layers
